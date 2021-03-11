@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using web_api.BL;
 using web_api.ViewModels;
 
 namespace web_api.Controllers
@@ -12,6 +13,11 @@ namespace web_api.Controllers
     //[Route("api/products")]
     public class ProductController : Controller
     {
+        DbSaver dbsaver;
+        public ProductController()
+        {
+            dbsaver = new DbSaver();
+        }
         // GET: ProductController
         [HttpGet]
         public ActionResult Index()
@@ -97,19 +103,25 @@ namespace web_api.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveNewTest([FromBody] Test test)
+        public ActionResult SaveNewTest([FromBody] TestObjectToSave test)
         {
-            if(test.Id == 1)
+
+            var saveResult = dbsaver.SaveOne(test);
+            if (saveResult == 1)
             {
-                return Ok();
+                return BadRequest(new Error { ErrorCode = 9000, ErrorMessage = $"{nameof(dbsaver.SaveOne)} method failed saving data" });
             }
 
-            return BadRequest(new Error { ErrorCode = 9000 });
-            
+            saveResult = dbsaver.SaveTwo();
+            if (saveResult == 1)
+            {
+                return BadRequest(new Error { ErrorCode = 9000, ErrorMessage = $"{nameof(dbsaver.SaveTwo)} method failed saving data" });
+            }
+            return Ok();
         }
     }
 
-    public class Test
+    public class TestObjectToSave
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -117,5 +129,6 @@ namespace web_api.Controllers
     public class Error
     {
         public int ErrorCode { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }
