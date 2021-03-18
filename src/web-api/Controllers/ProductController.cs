@@ -10,38 +10,38 @@ using web_api.ViewModels;
 namespace web_api.Controllers
 {
     [ApiController]
-    //[Route("api/products")]
+    [Route("api/products")]
     public class ProductController : Controller
     {
-        DbSaver dbsaver;
-        public ProductController()
+        IDatabaseManager dbsaver;
+        public ProductController(IDatabaseManager dbSaver)
         {
-            dbsaver = new DbSaver();
+            this.dbsaver = dbSaver;
         }
         // GET: ProductController
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return Ok();
         }
 
         // GET: ProductController/Details/5
         [HttpGet("view/{id}")]
         public async Task<IActionResult> Details(int id)
         {
-            Product result = new Product();
-            if(id == default(int))
+            var prod = dbsaver.GetProduct(id);
+            if(prod != null)
             {
-                return NoContent();
+                return Ok(prod);
             }
-            return View(result);
+            return NotFound();
         }
 
         // GET: ProductController/Create
         [HttpPost]
         public ActionResult Create()
         {
-            return View();
+            return Ok();
         }
 
         // POST: ProductController/Create
@@ -55,14 +55,14 @@ namespace web_api.Controllers
             }
             catch
             {
-                return View();
+                return Ok();
             }
         }
 
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return Ok();
         }
 
         // POST: ProductController/Edit/5
@@ -76,7 +76,7 @@ namespace web_api.Controllers
             }
             catch
             {
-                return View();
+                return Ok();
             }
         }
 
@@ -84,7 +84,7 @@ namespace web_api.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            return View();
+            return Ok();
         }
 
         // POST: ProductController/Delete/5
@@ -98,7 +98,7 @@ namespace web_api.Controllers
             }
             catch
             {
-                return View();
+                return Ok();
             }
         }
 

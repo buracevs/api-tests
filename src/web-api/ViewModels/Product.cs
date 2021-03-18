@@ -16,5 +16,7 @@ namespace web_api.ViewModels
         public string Description { get; set; }
 
         public string[] Images { get; set; }
+
+        public decimal Price { get; set; }
     }
 }
