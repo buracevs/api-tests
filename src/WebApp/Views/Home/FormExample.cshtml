@@ -1,0 +1,18 @@
+﻿@using WebApp.Models
+@model SimpleSearchForView
+@{
+    ViewData["Title"] = "FormExample";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>FormExample</h1>
+@using (Html.BeginForm("Search", "Home", FormMethod.Get))
+{
+    @Html.TextBoxFor(model => model.TextToFind)
+
+    @Html.DropDownListFor(model => model.Categories, Model.Categories, optionLabel: "Viberite text", htmlAttributes: new { })
+    <br />
+    <input type="submit" value="Create"/>
+
+}
+

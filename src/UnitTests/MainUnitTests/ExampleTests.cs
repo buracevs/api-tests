@@ -39,5 +39,14 @@ namespace MainUnitTests
             Assert.NotNull(result);
             Assert.Equal("c4ca4238a0b923820dcc509a6f75849b", result);
         }
+
+        [Theory]
+        [InlineData(1,1,2)]
+        [InlineData(2,2,4)]
+        public void TestSum(int x, int y, int expectedResult)
+        {
+            var result = Example.Sum(x, y);
+            Assert.Equal(expectedResult, result);
+        }
     }
 }

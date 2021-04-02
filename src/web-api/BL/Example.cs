@@ -27,6 +27,11 @@ namespace web_api.BL
 
             return stringBuilder.ToString();
         }
+
+        public static int Sum(int x, int y)
+        {
+            return x + y;
+        }
     }
 
     public static class AnotherExample{

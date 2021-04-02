@@ -19,4 +19,6 @@ namespace web_api.ViewModels
 
         public decimal Price { get; set; }
     }
+    
+    
 }
